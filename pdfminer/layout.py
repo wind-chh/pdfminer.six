@@ -281,7 +281,7 @@ class LTChar(LTComponent, LTText):
     """Actual letter in the text as a Unicode string."""
 
     def __init__(self, matrix, font, fontsize, scaling, rise,
-                 text, textwidth, textdisp, ncs, graphicstate):
+                 text, textwidth, textdisp, ncs, graphicstate, render):
         LTText.__init__(self)
         self._text = text
         self.matrix = matrix
@@ -289,6 +289,7 @@ class LTChar(LTComponent, LTText):
         self.ncs = ncs
         self.graphicstate = graphicstate
         self.adv = textwidth * fontsize * scaling
+        self.render = render
         # compute the boundary rectangle.
         if font.is_vertical():
             # vertical

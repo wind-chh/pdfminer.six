@@ -125,7 +125,7 @@ class PDFLayoutAnalyzer(PDFTextDevice):
         return curve
 
     def render_char(self, matrix, font, fontsize, scaling, rise, cid, ncs,
-                    graphicstate):
+                    graphicstate, render):
         try:
             text = font.to_unichr(cid)
             assert isinstance(text, str), str(type(text))
@@ -134,7 +134,7 @@ class PDFLayoutAnalyzer(PDFTextDevice):
         textwidth = font.char_width(cid)
         textdisp = font.char_disp(cid)
         item = LTChar(matrix, font, fontsize, scaling, rise, text, textwidth,
-                      textdisp, ncs, graphicstate)
+                      textdisp, ncs, graphicstate, render)
         self.cur_item.add(item)
         return item.adv
 
@@ -559,9 +559,10 @@ class XMLConverter(PDFConverter):
                 self.write('</textbox>\n')
             elif isinstance(item, LTChar):
                 s = '<text font="%s" bbox="%s" colourspace="%s" ' \
-                    'ncolour="%s" size="%.3f">' % \
+                    'ncolour="%s" size="%.3f" render="%d" c="%.3f">' % \
                     (enc(item.fontname), bbox2str(item.bbox),
-                     item.ncs.name, item.graphicstate.ncolor, item.size)
+                     item.ncs.name, item.graphicstate.ncolor, item.size,
+                     item.render, item.matrix[2])
                 self.write(s)
                 self.write_text(item.get_text())
                 self.write('</text>\n')
