@@ -361,7 +361,7 @@ class CMapParser(PSStackParser):
         if token is self.KEYWORD_ENDCIDCHAR:
             objs = [obj for (__, obj) in self.popall()]
             for (cid, code) in choplist(2, objs):
-                if isinstance(code, bytes) and isinstance(cid, bytes):
+                if isinstance(code, bytes) and isinstance(cid, int):
                     self.cmap.add_cid2unichr(cid, code)
             return
 

@@ -20,4 +20,8 @@ tests/*.txt
 Pipfile
 Pipfile.lock
 .noseids
+<<<<<<< HEAD
 .vscode/
+=======
+.vscode/
+>>>>>>> 566-fix-cjk-characters-extraction
