@@ -413,7 +413,7 @@ class TrueTypeFont:
         for i in range(nsubtables):
             subtables.append(struct.unpack('>HHL', fp.read(8)))
         char2gid = {}
-        # Only supports subtable type 0, 2 and 4.
+        # supports subtable type 0, 2, 4, 6, 10, 12
         for (_1, _2, st_offset) in subtables:
             fp.seek(base_offset+st_offset)
             (fmttype,) = struct.unpack('>H', fp.read(2))
@@ -428,7 +428,7 @@ class TrueTypeFont:
             elif fmttype == 10:
                 self.parse_cmap_format_10(fp, char2gid)
             elif fmttype == 12:
-                self.parse_cmap_format_10(fp, char2gid)
+                self.parse_cmap_format_12(fp, char2gid)
             else:
                 assert False, str(('Unhandled', fmttype))
         # create unicode map
